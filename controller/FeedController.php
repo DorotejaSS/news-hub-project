@@ -19,6 +19,9 @@ class FeedController
 		$view->loadPage('feed', 'index');
 	}
 
+	// writting the id-s into the $_SESSION and calling the Model 
+	// who returns the urls of the channels with the forwarded id-s
+	// calling the method fetchNewsByUrl(with $argument which holds the urls)
 	public function updateChannels()
 	{
 		$_SESSION['selected_channel_ids'] = $_GET['channel'];
@@ -28,6 +31,7 @@ class FeedController
 		
 	}
 
+	// preparing the urls for sending to the server
 	private function fetchNewsByUrl($urls)
 	{	
 		$fetched_news = [];
@@ -40,7 +44,8 @@ class FeedController
 			curl_setopt($ch, CURLOPT_URL, $url->url);	 // pandam open metodi u js
 			curl_setopt($ch, CURLOPT_HEADER, 0);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);	// ignorise httpS
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);		//ono sto nadjes, ne ehuj nego vrati u promenljivu
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);		// ono sto nadjes, 
+																// ne ehuj nego vrati u promenljivu
 
 
 			// grab URL and pass it to the browser
@@ -50,26 +55,21 @@ class FeedController
 			curl_close($ch);
 
 			$xml = new SimpleXMLElement($result);
-			if (isset($_REQUEST['format']) && $_REQUEST['format'] === 'xml'){
-				header('Content-type: application/xml');
-				echo $xml->asXML();
-			}
+			// if (isset($_REQUEST['format']) && $_REQUEST['format'] === 'xml'){
+			// 	header('Content-type: application/rss+xml');
+			// 	echo $xml->asXML();
+			// }
 
 			$xml = $xml->channel;
-			// var_dump($xml);
-
+			
 			$output = array(
 				'title' => $xml->title->__toString(),
-				'description' => $xml->description->__toString(), 		//adaptiranje sadrzaja u niz koji nama odgovara
+				'description' => $xml->description->__toString(),
 				'image' =>  $xml->image->url->__toString(),
 				'updated' => $xml->pubDate->__toString(),
 				'articles' => array()
 			);
-
-			var_dump($output['image']);
-
-			// var_dump($output);
-
+			
 			foreach ($xml->children() as $key => $node) {
 				if ($key === 'item') {
 					$output['articles'][] = array(

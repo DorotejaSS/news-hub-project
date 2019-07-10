@@ -30,6 +30,8 @@ class Channel
 		return $sources;
 	}
 
+	// grabbing the urls by $ids from $_SESSION
+	// and nesting it into the $url[] , then returnig it to updateChannels
 	public function getUrlsById($ids)
 	{
 		$ids_str = implode(',', $ids);
