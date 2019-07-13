@@ -14,8 +14,9 @@ class FeedController
 
 		$view = new View();
 		$view->data['channels'] = $channels;
+		// var_dump($view->data['channels']);
+
 		$view->data['title'] = 'Homepage';
-		var_dump($view->data);
 		$view->loadPage('feed', 'index');
 	}
 
@@ -27,7 +28,10 @@ class FeedController
 		$_SESSION['selected_channel_ids'] = $_GET['channel'];
 		$channel = new Channel();
 		$channel_urls = $channel->getUrlsById($_SESSION['selected_channel_ids']);
+		$_SESSION['channel_urls'] = $channel_urls; 
 		$fetched_news = $this->fetchNewsByUrl($channel_urls);
+
+		$display_selected = $this->displaySelected();
 		
 	}
 
@@ -39,7 +43,6 @@ class FeedController
 		foreach ($urls as $url) {
 			
 			$ch = curl_init();
-
 			// set URL and other appropriate options
 			curl_setopt($ch, CURLOPT_URL, $url->url);	 // pandam open metodi u js
 			curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -50,6 +53,7 @@ class FeedController
 
 			// grab URL and pass it to the browser
 			$result = curl_exec($ch);
+
 
 			// close cURL resource, and free up system resources
 			curl_close($ch);
@@ -82,21 +86,26 @@ class FeedController
 			}
 			array_push($fetched_news, $output);
 		}
+
+		// var_dump($fetched_news);
 		return $fetched_news;
 	}
 		
 
-	public function homePage()
+	public function displaySelected()
 	{
 		$channel = new Channel();
 		$channels = $channel->index();
 
 		$view = new View();
 		$view->data['channels'] = $channels;
+
 		$view->data['title'] = 'Homepage';
+		$channel_urls = $_SESSION['channel_urls'];
+		$_SESSION['fetched_news'] = $this->fetchNewsByUrl($channel_urls);
+
 		$view->loadPage('feed', 'home');
-		var_dump($_GET);
-		// find the channels with id from $_GET['channel'] 
-		// and bring the url with the same id from database 
+
+	
 	}	
 }
