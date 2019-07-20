@@ -14,7 +14,6 @@ class FeedController
 
 		$view = new View();
 		$view->data['channels'] = $channels;
-		// var_dump($view->data['channels']);
 
 		$view->data['title'] = 'Homepage';
 		$view->loadPage('feed', 'index');
@@ -28,9 +27,9 @@ class FeedController
 		$_SESSION['selected_channel_ids'] = $_GET['channel'];
 		$channel = new Channel();
 		$channel_urls = $channel->getUrlsById($_SESSION['selected_channel_ids']);
-		$_SESSION['channel_urls'] = $channel_urls; 
-		$fetched_news = $this->fetchNewsByUrl($channel_urls);
 
+		$_SESSION['channel_urls'] = $channel_urls;
+		$fetched_news = $this->fetchNewsByUrl($channel_urls);
 		$display_selected = $this->displaySelected();
 		
 	}
@@ -59,17 +58,30 @@ class FeedController
 			curl_close($ch);
 
 			$xml = new SimpleXMLElement($result);
-			// if (isset($_REQUEST['format']) && $_REQUEST['format'] === 'xml'){
-			// 	header('Content-type: application/rss+xml');
-			// 	echo $xml->asXML();
-			// }
+			if (isset($_REQUEST['format']) && $_REQUEST['format'] === 'xml'){
+				header('Content-type: application/rss+xml');
+				echo $xml->asXML();
+			}
 
 			$xml = $xml->channel;
+
+
+
+			if(!$xml->image->url){
+				$image = 'https://villagevoice.freetls.fastly.net/wp-content/uploads/2012/03/hp_twitter_avatar_128x128.png';
+			} else {
+				$image = $xml->image->url->__toString();
+			}
+
+			if (strpos($xml->image->url, 'gif')){
+				$image = 'http://i2.cdn.turner.com/cnn/2015/images/09/24/cnn.digital.png';
+			}
+			
 			
 			$output = array(
 				'title' => $xml->title->__toString(),
 				'description' => $xml->description->__toString(),
-				'image' =>  $xml->image->url->__toString(),
+				'image' =>  $image,
 				'updated' => $xml->pubDate->__toString(),
 				'articles' => array()
 			);
@@ -87,13 +99,14 @@ class FeedController
 			array_push($fetched_news, $output);
 		}
 
-		// var_dump($fetched_news);
 		return $fetched_news;
-	}
 		
+	}
+			
 
 	public function displaySelected()
 	{
+
 		$channel = new Channel();
 		$channels = $channel->index();
 
@@ -102,10 +115,10 @@ class FeedController
 
 		$view->data['title'] = 'Homepage';
 		$channel_urls = $_SESSION['channel_urls'];
-		$_SESSION['fetched_news'] = $this->fetchNewsByUrl($channel_urls);
-
+		
+		$view->data['selected_news'] = $this->fetchNewsByUrl($channel_urls);
 		$view->loadPage('feed', 'home');
-
 	
-	}	
+	}
+
 }

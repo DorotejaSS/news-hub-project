@@ -21,15 +21,16 @@
 			</span>
 			<div class="nav">
 				<ul class="navbar-nav">
-
 					<?php foreach ($this->data['channels'] as $channel): ?>
 						<?php if (isset($_GET['channel']) && in_array($channel['id'], $_GET['channel'])) : ?>
-							<li><a href="#"><?php echo strtoupper($channel['title']); ?></a></li>
+							<li><a href="#" class="click"><?php echo strtoupper($channel['title']); ?></a></li>
 						<?php endif; ?>
 					<?php endforeach ?>
-
+						
+					<li id="logo"><a href="#"><img src="../../assets/images/logo2.png"></a></li>
 				</ul>
 			</div>
+
 		</nav>
 		<form action="/feed/update-channels" method="get">
 			<div id="side-menu" class="side-nav">
@@ -47,4 +48,3 @@
 				<input type="submit" name="filter" value="Submit">
 			</div>
 		</form>
-		<div id="main">

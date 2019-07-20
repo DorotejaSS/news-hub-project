@@ -34,16 +34,21 @@ class Channel
 	// and nesting it into the $urls[] , then returnig it to updateChannels
 	public function getUrlsById($ids)
 	{
+		
+
 		$ids_str = implode(',', $ids);
+		$query = 'select url from sources where id in ('.$ids_str.')';
 
 		global $conn;
-		$query = 'select url from sources where id in ('.$ids_str.')';
 		$res = $conn->query($query);
 		$urls = [];
 		while($url = $res->fetch_object()){
 			$urls[] = $url;
 		}
 		return $urls;
+
+
+
 	}
 
 

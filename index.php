@@ -2,7 +2,6 @@
 session_start();
 
 define('DOMAIN', $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']);
-// var_dump(DOMAIN);
 
 spl_autoload_register(function($class){
 	require('./controller/'.$class.'.php');

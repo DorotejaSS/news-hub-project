@@ -1,6 +1,7 @@
 body{
 	font-family: "Arial", Serif;
 	background-color: #f4f4f4;
+	background-image: url(../images/background.png);
 }
 
 .navbar{
@@ -61,7 +62,9 @@ body{
 .side-nav a:hover{
 	color: #fff;
 }
-
+#side-menu{
+	overflow-x: scroll;
+}
 #side-menu > span{
 	color: white;
 	font-size: 22px;
@@ -70,7 +73,11 @@ body{
 #side-menu > p > label > span{
 	color: white;
 }
-
+#side-menu input[name="filter"] {
+	display: block;
+	float: none;
+    margin-bottom: 70px;
+}
 .side-nav .btn-close{
 	position: absolute;
 	top: 0;
@@ -84,21 +91,27 @@ body{
 	padding: 20px;
 	overflow: hidden;
 	width: 100%;
+	/*display: none;*/
 }
 
-#logout{
-    float: right;
-    display: block;
-    padding: 10px;
-    margin-right: 20px;
-}
+#logo img{
+	height: 125px;
+    margin: -50px;
 }
 
-@media(max-width: 568px){
+#logo a{
+	float: right;
+    padding-right: 65px;
+
+}
+
+
+
+/*@media(max-width: 568px){
 	.navbar-nav{display: none}
-}
+}*/
 
 
-@media(min-width: 568px){
+/*@media(min-width: 568px){
 	.open-slide{display: none}
-}
+}*/
