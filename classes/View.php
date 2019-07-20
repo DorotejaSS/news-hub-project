@@ -9,10 +9,10 @@ class View
 
 	public function loadPage($entity_name, $partial_name)
 	{
-		require('./view/includes/header.php');
+		require('../view/includes/header.php');
 
-		require('./view/'.$entity_name.'/'.$partial_name.'.php');
+		require('../view/'.$entity_name.'/'.$partial_name.'.php');
 
-		require('./view/includes/footer.php');
+		require('../view/includes/footer.php');
 	}
 }

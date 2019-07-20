@@ -5,12 +5,12 @@ session_start();
 define('DOMAIN', $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']);
 
 spl_autoload_register(function($class){
-	require('./controller/'.$class.'.php');
+	require('../controller/'.$class.'.php');
 });
 
-require('./model/Channel.php');
+require('../model/Channel.php');
 
-foreach (glob('./classes/*') as $class_name) {
+foreach (glob('../classes/*') as $class_name) {
 	require($class_name);
 }
 
