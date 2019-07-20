@@ -21,6 +21,7 @@
 			</span>
 			<div class="nav">
 				<ul class="navbar-nav">
+
 					<?php foreach ($this->data['channels'] as $channel): ?>
 						<?php if (isset($_GET['channel']) && in_array($channel['id'], $_GET['channel'])) : ?>
 							<li><a href="#" class="click"><?php echo strtoupper($channel['title']); ?></a></li>
@@ -36,15 +37,17 @@
 			<div id="side-menu" class="side-nav">
 				<a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
 				<span>Choose the news you want to see</span>
+
 					<?php foreach ($this->data['channels'] as $channel): ?>
 						<p>
 							<label>
-								<input type="checkbox" name="channel[]" value="<?php echo $channel['id']; ?>" 
+								<input type="checkbox" name="channel[]" value="<?php echo $channel['id']; ?>"
 								<?php echo (isset($_GET['channel']) && in_array($channel['id'], $_GET['channel'])) ? 'checked' : ''; ?>>
 								<span><?php echo strtoupper($channel['title']); ?></span>
 							</label>
 						</p>
 					<?php endforeach; ?>
+					
 				<input type="submit" name="filter" value="Submit">
 			</div>
 		</form>

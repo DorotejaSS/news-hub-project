@@ -5,9 +5,7 @@ class View
 	public $data = array();
 
 	public function __construct()
-	{
-
-	}
+	{}
 
 	public function loadPage($entity_name, $partial_name)
 	{
@@ -17,5 +15,4 @@ class View
 
 		require('./view/includes/footer.php');
 	}
-
 }

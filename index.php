@@ -1,18 +1,18 @@
 <?php 
 session_start();
 
+//								http 				www.news-hub.com 
 define('DOMAIN', $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']);
 
 spl_autoload_register(function($class){
 	require('./controller/'.$class.'.php');
 });
 
-foreach (glob('./model/*') as $model_name) {
-	require($model_name);
-}
+require('./model/Channel.php');
 
-require('./classes/Router.php');
-require('./classes/View.php');
+foreach (glob('./classes/*') as $class_name) {
+	require($class_name);
+}
 
 $router = new Router(); 
 

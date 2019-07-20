@@ -25,15 +25,15 @@ body{
 	list-style: none;
 }
 
-
 .nav > li{
 	display: inline;
 	margin-left: 30px;
 }
 
-.navbar a:hover{
+.navbar a.click:hover{
 	background-color: #ddd;
 	color: #000;
+	font-weight: bold;
 }
 
 .side-nav{
@@ -73,11 +73,13 @@ body{
 #side-menu > p > label > span{
 	color: white;
 }
+
 #side-menu input[name="filter"] {
 	display: block;
 	float: none;
     margin-bottom: 70px;
 }
+
 .side-nav .btn-close{
 	position: absolute;
 	top: 0;
@@ -91,7 +93,30 @@ body{
 	padding: 20px;
 	overflow: hidden;
 	width: 100%;
-	/*display: none;*/
+}
+
+#main .text .stepback{
+	padding-left: 60px;
+}
+
+.dot{
+  width: 25px;
+  height: 25px;
+  margin-left: 15px;
+  border-radius: 30px;
+  background-color: red;
+  position: relative;
+  animation-name: moving_dot;
+  animation-duration: 5s;
+  animation-iteration-count: 30;
+}
+
+@keyframes moving_dot{
+  0%   {background-color:black; left:0px; top:0px;}
+  25%  {background-color:rgb(201, 233, 248); left:0px; top:-100px;}
+  50%  {background-color:rgb(59, 89, 152); left:0px; top:-215px;}
+  75%  {background-color:rgb(51, 154, 229); left:0px; top:-100px;}
+  100% {background-color:rgb(169, 214, 241); left:0px; top:0px;}
 }
 
 #logo img{
@@ -102,16 +127,4 @@ body{
 #logo a{
 	float: right;
     padding-right: 65px;
-
 }
-
-
-
-/*@media(max-width: 568px){
-	.navbar-nav{display: none}
-}*/
-
-
-/*@media(min-width: 568px){
-	.open-slide{display: none}
-}*/

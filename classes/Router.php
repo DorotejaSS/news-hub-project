@@ -13,7 +13,7 @@ class Router
 		$this->instantiateController();
 	}
 
-	// spliting the url to the parts, so we can use the first part as controller and the second for method.
+	// spliting the url to the parts, so we can use the first part as controller and the second as method.
 	private function resolveController()
 	{	
 		$path_parts = substr($this->server['REQUEST_URI'], 1);
@@ -22,9 +22,9 @@ class Router
 	
 		$this->controller_name = ucfirst($controller_name) . 'Controller';
 
-		$method_name = explode('?', $path_parts[1]); 
-		
-		if(strpos($method_name[0], '-') > 0){
+		$method_name = explode('?', $path_parts[1]);
+
+		if(strpos($method_name[0], '-') > 0) {
 			$method_name_parts = explode('-', $method_name[0]);
 			$method_name = $method_name_parts[0] . ucfirst($method_name_parts[1]);
 		} else {
@@ -37,8 +37,7 @@ class Router
 	private function instantiateController()
 	{
 		$controller = new $this->controller_name();
-		$method_name = $this->method_name;
-		$controller->$method_name();
-		// var_dump($controller->$method_name);
+		$method = $this->method_name;
+		$controller->$method();
 	}
 }
